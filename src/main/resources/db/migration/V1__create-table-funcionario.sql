@@ -7,7 +7,6 @@ CREATE TABLE Funcionario(
     senha VARCHAR(100) NOT NULL,
     telefone VARCHAR(11),
     cargo VARCHAR(30) NOT NULL,
-    situacao VARCHAR(7) NOT NULL,
     data_entrada VARCHAR(30) NOT NULL,
     data_saida VARCHAR(30)
 );
