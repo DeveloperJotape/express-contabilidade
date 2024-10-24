@@ -4,6 +4,7 @@ import br.com.devjoaopedro.expresscontabilidade.funcionario.enums.Cargo;
 import br.com.devjoaopedro.expresscontabilidade.funcionario.enums.Situacao;
 
 public record DadosListagemFuncionario(
+        Long id,
         String nome,
         String email,
         String telefone,
@@ -11,7 +12,8 @@ public record DadosListagemFuncionario(
         Situacao situacao
 ) {
     public DadosListagemFuncionario (Funcionario funcionario){
-        this(funcionario.getNome(),
+        this(funcionario.getId(),
+                funcionario.getNome(),
                 funcionario.getEmail(),
                 funcionario.getTelefone(),
                 funcionario.getCargo(),

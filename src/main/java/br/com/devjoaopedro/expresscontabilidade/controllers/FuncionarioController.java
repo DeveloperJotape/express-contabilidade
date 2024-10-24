@@ -1,5 +1,6 @@
 package br.com.devjoaopedro.expresscontabilidade.controllers;
 
+import br.com.devjoaopedro.expresscontabilidade.funcionario.DadosAtualizarFuncionario;
 import br.com.devjoaopedro.expresscontabilidade.funcionario.DadosCadastroFuncionario;
 import br.com.devjoaopedro.expresscontabilidade.funcionario.DadosListagemFuncionario;
 import br.com.devjoaopedro.expresscontabilidade.funcionario.Funcionario;
@@ -30,6 +31,14 @@ public class FuncionarioController {
                 .stream()
                 .map(DadosListagemFuncionario::new)
                 .toList();
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody @Valid DadosAtualizarFuncionario dados) {
+        //Busca por id o dado
+        var funcionario = funcionarioRepository.getReferenceById(dados.id());
+        funcionario.atualizarInformacoes(dados);
     }
 
 }

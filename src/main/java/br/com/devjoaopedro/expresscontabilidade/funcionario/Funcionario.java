@@ -49,4 +49,27 @@ public class Funcionario {
         this.dataSaida = dados.dataSaida();
     }
 
+    public void atualizarInformacoes(DadosAtualizarFuncionario dados) {
+        if(dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+        if(dados.senha() != null) {
+            this.senha = dados.senha();
+        }
+        if(dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+        if(dados.cargo() != null) {
+            this.cargo = dados.cargo();
+        }
+        if(dados.situacao() != null) {
+            this.situacao = dados.situacao();
+        }
+        if(dados.dataSaida() != null) {
+            this.dataSaida = dados.dataSaida();
+        }
+    }
 }
