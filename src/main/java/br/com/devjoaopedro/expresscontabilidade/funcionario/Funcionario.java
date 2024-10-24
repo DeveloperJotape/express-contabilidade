@@ -32,6 +32,9 @@ public class Funcionario {
     @Enumerated(EnumType.STRING)
     private Situacao situacao;
 
+    private Date dataEntrada;
+    private Date dataSaida;
+
     public Funcionario(DadosCadastroFuncionario dados) {
         this.nome = dados.nome();
         this.cpf = dados.cpf();
@@ -41,6 +44,8 @@ public class Funcionario {
         this.telefone = dados.telefone();
         this.cargo = dados.cargo();
         this.situacao = dados.situacao();
+        this.dataEntrada = dados.dataEntrada();
+        this.dataSaida = dados.dataSaida();
     }
 
 }

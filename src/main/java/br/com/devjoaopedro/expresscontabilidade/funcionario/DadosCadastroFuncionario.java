@@ -13,5 +13,7 @@ public record DadosCadastroFuncionario(
         String senha,
         String telefone,
         Cargo cargo,
-        Situacao situacao) {
+        Situacao situacao,
+        Date dataEntrada,
+        Date dataSaida) {
 }
