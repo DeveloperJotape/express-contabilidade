@@ -1,6 +1,7 @@
 package br.com.devjoaopedro.expresscontabilidade.controllers;
 
 import br.com.devjoaopedro.expresscontabilidade.funcionario.DadosCadastroFuncionario;
+import br.com.devjoaopedro.expresscontabilidade.funcionario.DadosListagemFuncionario;
 import br.com.devjoaopedro.expresscontabilidade.funcionario.Funcionario;
 import br.com.devjoaopedro.expresscontabilidade.repositories.FuncionarioRepository;
 import jakarta.transaction.Transactional;
@@ -23,6 +24,12 @@ public class FuncionarioController {
         funcionarioRepository.save(new Funcionario(dados));
     }
 
-
+    @GetMapping
+    public List<DadosListagemFuncionario> listar() {
+        return funcionarioRepository.findAll()
+                .stream()
+                .map(DadosListagemFuncionario::new)
+                .toList();
+    }
 
 }
