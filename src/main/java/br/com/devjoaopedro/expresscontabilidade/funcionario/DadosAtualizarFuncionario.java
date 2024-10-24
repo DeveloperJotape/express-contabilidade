@@ -1,7 +1,6 @@
 package br.com.devjoaopedro.expresscontabilidade.funcionario;
 
 import br.com.devjoaopedro.expresscontabilidade.funcionario.enums.Cargo;
-import br.com.devjoaopedro.expresscontabilidade.funcionario.enums.Situacao;
 import jakarta.validation.constraints.NotNull;
 
 
@@ -15,8 +14,7 @@ public record DadosAtualizarFuncionario(
         String senha,
         String telefone,
         Cargo cargo,
-        Situacao situacao,
-        LocalDate dataSaida
-
+        LocalDate dataSaida,
+        Boolean situacao
 ) {
 }

@@ -1,12 +1,10 @@
 package br.com.devjoaopedro.expresscontabilidade.funcionario;
 
 import br.com.devjoaopedro.expresscontabilidade.funcionario.enums.Cargo;
-import br.com.devjoaopedro.expresscontabilidade.funcionario.enums.Situacao;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity(name = "funcionarios")
 @Table(name = "Funcionario")
@@ -30,11 +28,10 @@ public class Funcionario {
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
 
-    @Enumerated(EnumType.STRING)
-    private Situacao situacao;
-
     private LocalDate dataEntrada;
     private LocalDate dataSaida;
+
+    private Boolean situacao;
 
     public Funcionario(DadosCadastroFuncionario dados) {
         this.nome = dados.nome();
@@ -44,9 +41,9 @@ public class Funcionario {
         this.senha = dados.senha();
         this.telefone = dados.telefone();
         this.cargo = dados.cargo();
-        this.situacao = dados.situacao();
         this.dataEntrada = dados.dataEntrada();
         this.dataSaida = dados.dataSaida();
+        this.situacao = true;
     }
 
     public void atualizarInformacoes(DadosAtualizarFuncionario dados) {
@@ -65,11 +62,16 @@ public class Funcionario {
         if(dados.cargo() != null) {
             this.cargo = dados.cargo();
         }
-        if(dados.situacao() != null) {
-            this.situacao = dados.situacao();
-        }
         if(dados.dataSaida() != null) {
             this.dataSaida = dados.dataSaida();
         }
+    }
+
+    public void inativar() {
+        this.situacao = false;
+    }
+
+    public void ativar() {
+        this.situacao = true;
     }
 }

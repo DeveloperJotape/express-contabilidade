@@ -1,7 +1,6 @@
 package br.com.devjoaopedro.expresscontabilidade.funcionario;
 
 import br.com.devjoaopedro.expresscontabilidade.funcionario.enums.Cargo;
-import br.com.devjoaopedro.expresscontabilidade.funcionario.enums.Situacao;
 
 public record DadosListagemFuncionario(
         Long id,
@@ -9,7 +8,7 @@ public record DadosListagemFuncionario(
         String email,
         String telefone,
         Cargo cargo,
-        Situacao situacao
+        Boolean situacao
 ) {
     public DadosListagemFuncionario (Funcionario funcionario){
         this(funcionario.getId(),

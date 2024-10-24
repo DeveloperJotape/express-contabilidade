@@ -27,7 +27,7 @@ public class FuncionarioController {
 
     @GetMapping
     public List<DadosListagemFuncionario> listar() {
-        return funcionarioRepository.findAll()
+        return funcionarioRepository.findAllBySituacaoTrue()
                 .stream()
                 .map(DadosListagemFuncionario::new)
                 .toList();
@@ -45,6 +45,21 @@ public class FuncionarioController {
     @Transactional
     public void excluir(@PathVariable Long id) {
         funcionarioRepository.deleteById(id);
+    }
+
+    @DeleteMapping("inativar/{id}")
+    @Transactional
+    public void inativar(@PathVariable Long id) {
+        var funcionario = funcionarioRepository.getReferenceById(id);
+        funcionario.inativar();
+    }
+
+    @PutMapping("ativar/{id}")
+    @Transactional
+    public void ativar(@PathVariable Long id) {
+        //Busca por id o dado
+        var funcionario = funcionarioRepository.getReferenceById(id);
+        funcionario.ativar();
     }
 
 }
