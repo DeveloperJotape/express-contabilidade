@@ -1,6 +1,6 @@
-package br.com.devjoaopedro.expresscontabilidade.funcionario;
+package br.com.devjoaopedro.expresscontabilidade.entities.funcionario;
 
-import br.com.devjoaopedro.expresscontabilidade.funcionario.enums.Cargo;
+import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.enums.Cargo;
 import jakarta.persistence.*;
 import lombok.*;
 

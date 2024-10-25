@@ -1,9 +1,9 @@
 package br.com.devjoaopedro.expresscontabilidade.controllers;
 
-import br.com.devjoaopedro.expresscontabilidade.funcionario.DadosAtualizarFuncionario;
-import br.com.devjoaopedro.expresscontabilidade.funcionario.DadosCadastroFuncionario;
-import br.com.devjoaopedro.expresscontabilidade.funcionario.DadosListagemFuncionario;
-import br.com.devjoaopedro.expresscontabilidade.funcionario.Funcionario;
+import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.DadosAtualizarFuncionario;
+import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.DadosCadastroFuncionario;
+import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.DadosListagemFuncionario;
+import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.Funcionario;
 import br.com.devjoaopedro.expresscontabilidade.repositories.FuncionarioRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -57,7 +57,7 @@ public class FuncionarioController {
     @PutMapping("ativar/{id}")
     @Transactional
     public void ativar(@PathVariable Long id) {
-        //Busca por id o dado
+        //Busca o dado pelo id
         var funcionario = funcionarioRepository.getReferenceById(id);
         funcionario.ativar();
     }

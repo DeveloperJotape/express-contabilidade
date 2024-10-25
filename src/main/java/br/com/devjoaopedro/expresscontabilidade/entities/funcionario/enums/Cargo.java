@@ -1,4 +1,4 @@
-package br.com.devjoaopedro.expresscontabilidade.funcionario.enums;
+package br.com.devjoaopedro.expresscontabilidade.entities.funcionario.enums;
 
 public enum Cargo {
     FISCAL,
