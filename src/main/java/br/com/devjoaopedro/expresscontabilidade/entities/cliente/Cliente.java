@@ -41,4 +41,17 @@ public class Cliente {
             dados.empresas().forEach(dto -> this.empresas.add(new Empresa(dto, this)));
         }
     }
+
+    public void atualizarInformacoes(DadosAtualizarCliente dados) {
+        if(dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+        if(dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+    }
+
 }
