@@ -3,7 +3,6 @@ package br.com.devjoaopedro.expresscontabilidade.controllers;
 import br.com.devjoaopedro.expresscontabilidade.entities.empresa.Empresa;
 import br.com.devjoaopedro.expresscontabilidade.repositories.EmpresaRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -49,8 +49,13 @@ public class Empresa {
         this.telefone = dados.telefone();
         this.email = dados.email();
         this.status = dados.status();
-        this.dataUltimaAtualizacao = dados.dataUltimaAtualizacao();
+        this.dataUltimaAtualizacao = LocalDate.now();
         this.cliente = cliente;
+    }
+
+    @PreUpdate
+    private void atualizarDataUltimaAtualizacao() {
+        this.dataUltimaAtualizacao = LocalDate.now();
     }
 
     public void ativar() {
