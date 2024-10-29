@@ -67,7 +67,7 @@ public class Funcionario {
         }
     }
 
-    public void inativar() {
+    public void desativar() {
         this.situacao = false;
     }
 

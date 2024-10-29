@@ -47,11 +47,11 @@ public class FuncionarioController {
         funcionarioRepository.deleteById(id);
     }
 
-    @DeleteMapping("inativar/{id}")
+    @DeleteMapping("desativar/{id}")
     @Transactional
-    public void inativar(@PathVariable Long id) {
+    public void desativar(@PathVariable Long id) {
         var funcionario = funcionarioRepository.getReferenceById(id);
-        funcionario.inativar();
+        funcionario.desativar();
     }
 
     @PutMapping("ativar/{id}")
