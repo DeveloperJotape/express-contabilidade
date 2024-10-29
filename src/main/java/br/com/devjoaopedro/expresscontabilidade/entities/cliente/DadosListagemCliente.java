@@ -11,6 +11,7 @@ public record DadosListagemCliente (
         String cpf,
         String email,
         String telefone,
+        Boolean status,
         List<Empresa> empresas
 ){
     public DadosListagemCliente(Cliente cliente){
@@ -20,6 +21,7 @@ public record DadosListagemCliente (
                 cliente.getCpf(),
                 cliente.getEmail(),
                 cliente.getTelefone(),
+                cliente.getStatus(),
                 cliente.getEmpresas()
         );
     }

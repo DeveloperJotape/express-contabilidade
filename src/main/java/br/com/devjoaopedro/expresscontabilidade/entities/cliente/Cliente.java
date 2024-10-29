@@ -27,6 +27,9 @@ public class Cliente {
     private String email;
     private String telefone;
 
+    @Column(nullable = false)
+    private Boolean status = true;
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Empresa> empresas = new ArrayList<>();
@@ -52,6 +55,23 @@ public class Cliente {
         if(dados.telefone() != null) {
             this.telefone = dados.telefone();
         }
+        if (dados.status() != null) {
+            this.status = dados.status();
+            // Se o cliente for desativado, todas as empresas também são desativadas
+            if (!this.status) {
+                this.empresas.forEach(empresa -> empresa.setStatus(false));
+            }
+        }
+    }
+
+    public void desativar() {
+        this.status = false;
+        //Desativa todas as empresas associadas
+        this.empresas.forEach(empresa -> empresa.setStatus(false));
+    }
+
+    public void reativar() {
+        this.status = true;
     }
 
 }

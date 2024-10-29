@@ -4,9 +4,7 @@ import br.com.devjoaopedro.expresscontabilidade.entities.cliente.Cliente;
 import br.com.devjoaopedro.expresscontabilidade.entities.cliente.DadosAtualizarCliente;
 import br.com.devjoaopedro.expresscontabilidade.entities.cliente.DadosCadastroCliente;
 import br.com.devjoaopedro.expresscontabilidade.entities.cliente.DadosListagemCliente;
-import br.com.devjoaopedro.expresscontabilidade.entities.empresa.Empresa;
 import br.com.devjoaopedro.expresscontabilidade.repositories.ClienteRepository;
-import br.com.devjoaopedro.expresscontabilidade.repositories.EmpresaRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +38,25 @@ public class ClienteController {
     public void atualizar(@RequestBody @Valid DadosAtualizarCliente dados) {
         var cliente = clienteRepository.getReferenceById(dados.id());
         cliente.atualizarInformacoes(dados);
+        clienteRepository.save(cliente);
+    }
+
+    @PutMapping("/desativar/{id}")
+    @Transactional
+    public void desativar(@PathVariable Long id) {
+        var cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        cliente.desativar();
+        clienteRepository.save(cliente);
+    }
+
+    @PutMapping("/reativar/{id}")
+    @Transactional
+    public void reativarCliente(@PathVariable Long id) {
+        var cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        cliente.reativar();
+        clienteRepository.save(cliente);
     }
 
 

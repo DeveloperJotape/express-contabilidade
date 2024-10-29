@@ -1,0 +1,2 @@
+ALTER TABLE Cliente ADD COLUMN status TINYINT NOT NULL;
+UPDATE Cliente SET status = 1;
