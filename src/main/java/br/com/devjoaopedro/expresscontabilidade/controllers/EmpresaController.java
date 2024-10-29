@@ -27,4 +27,22 @@ public class EmpresaController {
                 .orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
     }
 
+    @PutMapping("/ativar/{id}")
+    @Transactional
+    public void ativarEmpresa(@PathVariable Long id) {
+        var empresa = empresaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
+        empresa.ativar();
+        empresaRepository.save(empresa);
+    }
+
+    @PutMapping("/desativar/{id}")
+    @Transactional
+    public void desativarEmpresa(@PathVariable Long id) {
+        var empresa = empresaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
+        empresa.desativar();
+        empresaRepository.save(empresa);
+    }
+
 }

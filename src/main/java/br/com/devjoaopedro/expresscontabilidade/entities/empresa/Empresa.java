@@ -53,4 +53,12 @@ public class Empresa {
         this.cliente = cliente;
     }
 
+    public void ativar() {
+        this.status = true;
+    }
+
+    public void desativar() {
+        this.status = false;
+    }
+
 }
