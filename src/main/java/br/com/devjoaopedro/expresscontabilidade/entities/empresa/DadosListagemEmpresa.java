@@ -1,6 +1,7 @@
 package br.com.devjoaopedro.expresscontabilidade.entities.empresa;
 
 import br.com.devjoaopedro.expresscontabilidade.entities.cliente.Cliente;
+import br.com.devjoaopedro.expresscontabilidade.entities.cliente.DadosResumoCliente;
 import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.Funcionario;
 import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.enums.Cargo;
 
@@ -16,7 +17,7 @@ public record DadosListagemEmpresa(
         String email,
         Boolean status,
         LocalDate dataUltimaAtualizacao,
-        Cliente responsavel
+        DadosResumoCliente responsavel
 ) {
     public DadosListagemEmpresa(Empresa empresa){
         this(empresa.getId(),
@@ -28,6 +29,6 @@ public record DadosListagemEmpresa(
                 empresa.getEmail(),
                 empresa.getStatus(),
                 empresa.getDataUltimaAtualizacao(),
-                empresa.getCliente());
+                new DadosResumoCliente(empresa.getCliente()));
     }
 }

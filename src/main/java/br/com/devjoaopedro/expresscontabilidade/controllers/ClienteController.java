@@ -8,6 +8,7 @@ import br.com.devjoaopedro.expresscontabilidade.repositories.ClienteRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,11 +44,12 @@ public class ClienteController {
 
     @PutMapping("/desativar/{id}")
     @Transactional
-    public void desativar(@PathVariable Long id) {
+    public ResponseEntity<Void> desativar(@PathVariable Long id) {
         var cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
         cliente.desativar();
         clienteRepository.save(cliente);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/reativar/{id}")
