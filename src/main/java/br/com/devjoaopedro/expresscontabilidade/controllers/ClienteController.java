@@ -1,15 +1,13 @@
 package br.com.devjoaopedro.expresscontabilidade.controllers;
 
-import br.com.devjoaopedro.expresscontabilidade.entities.cliente.Cliente;
-import br.com.devjoaopedro.expresscontabilidade.entities.cliente.DadosAtualizarCliente;
-import br.com.devjoaopedro.expresscontabilidade.entities.cliente.DadosCadastroCliente;
-import br.com.devjoaopedro.expresscontabilidade.entities.cliente.DadosListagemCliente;
+import br.com.devjoaopedro.expresscontabilidade.entities.cliente.*;
 import br.com.devjoaopedro.expresscontabilidade.repositories.ClienteRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -22,24 +20,35 @@ public class ClienteController {
 
     @PostMapping
     @Transactional
-    public Cliente cadastrar(@RequestBody @Valid DadosCadastroCliente dados) {
-       return clienteRepository.save(new Cliente(dados));
+    public ResponseEntity<DadosDetalhamentoCliente> cadastrar(@RequestBody @Valid DadosCadastroCliente dados, UriComponentsBuilder uriBuilder) {
+        var cliente = new Cliente(dados);
+        clienteRepository.save(cliente);
+
+        var uri = uriBuilder.path("/clientes/{id}")
+                .buildAndExpand(cliente.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DadosDetalhamentoCliente(cliente));
+
     }
 
     @GetMapping
-    public List<DadosListagemCliente> listar() {
-        return clienteRepository.findAll()
+    public ResponseEntity<List<DadosListagemCliente>> listar() {
+        var listaClientes = clienteRepository.findAll()
                 .stream()
                 .map(DadosListagemCliente::new)
                 .toList();
+
+        return ResponseEntity.ok(listaClientes);
     }
 
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid DadosAtualizarCliente dados) {
+    public ResponseEntity<DadosDetalhamentoCliente> atualizar(@RequestBody @Valid DadosAtualizarCliente dados) {
         var cliente = clienteRepository.getReferenceById(dados.id());
         cliente.atualizarInformacoes(dados);
         clienteRepository.save(cliente);
+
+        return ResponseEntity.ok(new DadosDetalhamentoCliente(cliente));
     }
 
     @PutMapping("/desativar/{id}")
@@ -54,11 +63,18 @@ public class ClienteController {
 
     @PutMapping("/reativar/{id}")
     @Transactional
-    public void reativarCliente(@PathVariable Long id) {
-        var cliente = clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+    public ResponseEntity<Void> reativarCliente(@PathVariable Long id) {
+        var clienteOptional = clienteRepository.findById(id);
+
+        if(clienteOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var cliente = clienteOptional.get();
         cliente.reativar();
         clienteRepository.save(cliente);
+
+        return ResponseEntity.ok().build();
     }
 
 
