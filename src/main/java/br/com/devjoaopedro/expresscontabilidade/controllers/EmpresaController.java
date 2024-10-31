@@ -28,18 +28,18 @@ public class EmpresaController {
     }
 
     @GetMapping("/{id}")
-    public Empresa buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<Empresa> buscarPorId(@PathVariable Long id) {
         return empresaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/ativar/{id}")
     @Transactional
-    public void ativarEmpresa(@PathVariable Long id) {
-        var empresa = empresaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
+    public ResponseEntity<Void> ativarEmpresa(@PathVariable Long id) {
+        var empresa = empresaRepository.getReferenceById(id);
         empresa.ativar();
-        empresaRepository.save(empresa);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/desativar/{id}")
