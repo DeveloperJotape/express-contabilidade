@@ -40,6 +40,12 @@ public class FuncionarioController {
         return ResponseEntity.ok(listaFuncionarios);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<DadosDetalhamentoFuncionario> buscarPorId(@PathVariable Long id) {
+        var funcionario = funcionarioRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhamentoFuncionario(funcionario));
+    }
+
     @PutMapping
     @Transactional
     public ResponseEntity<DadosDetalhamentoFuncionario> atualizar(@RequestBody @Valid DadosAtualizarFuncionario dados) {

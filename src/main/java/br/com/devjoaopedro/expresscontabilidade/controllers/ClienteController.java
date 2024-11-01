@@ -41,6 +41,12 @@ public class ClienteController {
         return ResponseEntity.ok(listaClientes);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<DadosDetalhamentoCliente> buscarPorId(@PathVariable Long id) {
+        var cliente = clienteRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhamentoCliente(cliente));
+    }
+
     @PutMapping
     @Transactional
     public ResponseEntity<DadosDetalhamentoCliente> atualizar(@RequestBody @Valid DadosAtualizarCliente dados) {

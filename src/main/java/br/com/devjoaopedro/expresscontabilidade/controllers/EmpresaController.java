@@ -28,10 +28,9 @@ public class EmpresaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Empresa> buscarPorId(@PathVariable Long id) {
-        return empresaRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<DadosListagemEmpresa> buscarPorId(@PathVariable Long id) {
+        var empresa = empresaRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosListagemEmpresa(empresa));
     }
 
     @PutMapping("/ativar/{id}")
