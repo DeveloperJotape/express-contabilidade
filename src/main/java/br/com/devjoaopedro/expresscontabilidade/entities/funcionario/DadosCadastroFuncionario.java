@@ -26,4 +26,5 @@ public record DadosCadastroFuncionario(
         LocalDate dataEntrada,
         LocalDate dataSaida
 ) {
+
 }
