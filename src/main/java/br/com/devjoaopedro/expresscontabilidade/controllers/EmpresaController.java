@@ -3,6 +3,7 @@ package br.com.devjoaopedro.expresscontabilidade.controllers;
 import br.com.devjoaopedro.expresscontabilidade.entities.empresa.DadosListagemEmpresa;
 import br.com.devjoaopedro.expresscontabilidade.entities.empresa.Empresa;
 import br.com.devjoaopedro.expresscontabilidade.repositories.EmpresaRepository;
+import br.com.devjoaopedro.expresscontabilidade.service.EmpresaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,39 +16,30 @@ import java.util.List;
 public class EmpresaController {
 
     @Autowired
-    private EmpresaRepository empresaRepository;
+    private EmpresaService empresaService;
 
     @GetMapping
     public ResponseEntity<List<DadosListagemEmpresa>> listar() {
-        var listaEmpresas = empresaRepository.findAll()
-                .stream()
-                .map(DadosListagemEmpresa::new)
-                .toList();
-
-        return ResponseEntity.ok(listaEmpresas);
+        return ResponseEntity.ok(empresaService.listar());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DadosListagemEmpresa> buscarPorId(@PathVariable Long id) {
-        var empresa = empresaRepository.getReferenceById(id);
+        var empresa = empresaService.buscarPorId(id);
         return ResponseEntity.ok(new DadosListagemEmpresa(empresa));
-    }
-
-    @PutMapping("/ativar/{id}")
-    @Transactional
-    public ResponseEntity<Void> ativarEmpresa(@PathVariable Long id) {
-        var empresa = empresaRepository.getReferenceById(id);
-        empresa.ativar();
-        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/desativar/{id}")
     @Transactional
     public ResponseEntity<Void> desativarEmpresa(@PathVariable Long id) {
-        var empresa = empresaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
-        empresa.desativar();
-        empresaRepository.save(empresa);
+        empresaService.desativar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/ativar/{id}")
+    @Transactional
+    public ResponseEntity<Void> ativarEmpresa(@PathVariable Long id) {
+        empresaService.ativar(id);
         return ResponseEntity.noContent().build();
     }
 
