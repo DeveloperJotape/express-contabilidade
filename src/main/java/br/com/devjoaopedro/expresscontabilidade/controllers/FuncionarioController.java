@@ -2,6 +2,7 @@ package br.com.devjoaopedro.expresscontabilidade.controllers;
 
 import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.*;
 import br.com.devjoaopedro.expresscontabilidade.repositories.FuncionarioRepository;
+import br.com.devjoaopedro.expresscontabilidade.service.FuncionarioService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,68 +18,52 @@ public class FuncionarioController {
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;
+    @Autowired
+    private FuncionarioService funcionarioService;
 
     @PostMapping
     @Transactional
     public ResponseEntity<DadosDetalhamentoFuncionario> cadastrar(@RequestBody @Valid DadosCadastroFuncionario dados, UriComponentsBuilder uriBuilder) {
-        var funcionario = new Funcionario(dados);
-        funcionarioRepository.save(funcionario);
-
-        var uri = uriBuilder.path("/funcionarios/{id}")
-                .buildAndExpand(funcionario.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new DadosDetalhamentoFuncionario(funcionario));
+        var detalhamentoFuncionario = funcionarioService.cadastrar(dados);
+        var uri = uriBuilder.path("/funcionarios/{id}").buildAndExpand(detalhamentoFuncionario.id()).toUri();
+        return ResponseEntity.created(uri).body(detalhamentoFuncionario);
     }
 
     @GetMapping
     public ResponseEntity<List<DadosListagemFuncionario>> listar() {
-        var listaFuncionarios = funcionarioRepository.findAllBySituacaoTrue()
-                .stream()
-                .map(DadosListagemFuncionario::new)
-                .toList();
-
-        return ResponseEntity.ok(listaFuncionarios);
+        return ResponseEntity.ok(funcionarioService.listar());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DadosDetalhamentoFuncionario> buscarPorId(@PathVariable Long id) {
-        var funcionario = funcionarioRepository.getReferenceById(id);
+        var funcionario = funcionarioService.buscarPorId(id);
         return ResponseEntity.ok(new DadosDetalhamentoFuncionario(funcionario));
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity<DadosDetalhamentoFuncionario> atualizar(@RequestBody @Valid DadosAtualizarFuncionario dados) {
-        //Busca por id o dado
-        var funcionario = funcionarioRepository.getReferenceById(dados.id());
-        funcionario.atualizarInformacoes(dados);
-
-        return ResponseEntity.ok(new DadosDetalhamentoFuncionario(funcionario));
+        return ResponseEntity.ok(funcionarioService.atualizar(dados));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
-        funcionarioRepository.deleteById(id);
+        funcionarioService.excluir(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("desativar/{id}")
     @Transactional
     public ResponseEntity<Void> desativar(@PathVariable Long id) {
-        var funcionario = funcionarioRepository.getReferenceById(id);
-        funcionario.desativar();
-
+        funcionarioService.desativar(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("ativar/{id}")
     @Transactional
     public ResponseEntity<Void> ativar(@PathVariable Long id) {
-        //Busca o dado pelo id
-        var funcionario = funcionarioRepository.getReferenceById(id);
-        funcionario.ativar();
-
+        funcionarioService.ativar(id);
         return ResponseEntity.noContent().build();
     }
 
