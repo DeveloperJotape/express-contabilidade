@@ -7,6 +7,5 @@ public enum Cargo {
     ADMINISTRATIVO,
     CONTABIL,
     DESENVOLVEDOR,
-    GERENTE,
-    CHEFE
+    GERENTE
 }

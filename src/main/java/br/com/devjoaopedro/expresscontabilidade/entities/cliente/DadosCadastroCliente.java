@@ -1,6 +1,7 @@
 package br.com.devjoaopedro.expresscontabilidade.entities.cliente;
 
 import br.com.devjoaopedro.expresscontabilidade.entities.empresa.DadosCadastroEmpresa;
+import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.Funcionario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,6 +22,5 @@ public record DadosCadastroCliente(
         @NotBlank
         String telefone,
         List<DadosCadastroEmpresa> empresas
-
 ) {
 }

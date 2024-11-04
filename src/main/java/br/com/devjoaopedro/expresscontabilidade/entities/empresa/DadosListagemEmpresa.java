@@ -19,7 +19,7 @@ public record DadosListagemEmpresa(
         LocalDate dataUltimaAtualizacao,
         DadosResumoCliente responsavel
 ) {
-    public DadosListagemEmpresa(Empresa empresa){
+    public DadosListagemEmpresa(Empresa empresa) {
         this(empresa.getId(),
                 empresa.getNome(),
                 empresa.getCnpj(),

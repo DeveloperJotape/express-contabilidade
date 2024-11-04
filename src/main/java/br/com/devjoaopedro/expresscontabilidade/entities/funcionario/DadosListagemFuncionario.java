@@ -10,7 +10,7 @@ public record DadosListagemFuncionario(
         Cargo cargo,
         Boolean situacao
 ) {
-    public DadosListagemFuncionario (Funcionario funcionario){
+    public DadosListagemFuncionario(Funcionario funcionario) {
         this(funcionario.getId(),
                 funcionario.getNome(),
                 funcionario.getEmail(),

@@ -2,10 +2,9 @@ package br.com.devjoaopedro.expresscontabilidade.entities.cliente;
 
 import br.com.devjoaopedro.expresscontabilidade.entities.empresa.Empresa;
 
-import java.time.LocalDate;
 import java.util.List;
 
-public record DadosListagemCliente (
+public record DadosListagemCliente(
         Long id,
         String nome,
         String cpf,
@@ -13,8 +12,8 @@ public record DadosListagemCliente (
         String telefone,
         Boolean status,
         List<Empresa> empresas
-){
-    public DadosListagemCliente(Cliente cliente){
+) {
+    public DadosListagemCliente(Cliente cliente) {
         this(
                 cliente.getId(),
                 cliente.getNome(),

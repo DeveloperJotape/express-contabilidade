@@ -1,8 +1,8 @@
 package br.com.devjoaopedro.expresscontabilidade.entities.empresa;
 
 import br.com.devjoaopedro.expresscontabilidade.entities.cliente.Cliente;
+import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.Funcionario;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,18 +21,26 @@ public class Empresa {
     private Long id;
 
     private String nome;
+
     @Column(nullable = false, unique = true)
     private String cnpj;
+
     private String uf;
     private String regTributacao;
     private String qualificacao;
     private String inscricaoEstadual;
     private String telefone;
     private String email;
+
     @Column(nullable = false)
     private Boolean status;
+
     @Column(nullable = false)
     private LocalDate dataUltimaAtualizacao;
+
+    @ManyToOne
+    @JoinColumn(name = "funcionario_responsavel_id")
+    private Funcionario funcionarioResponsavel;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)

@@ -1,8 +1,6 @@
 package br.com.devjoaopedro.expresscontabilidade.controllers;
 
 import br.com.devjoaopedro.expresscontabilidade.entities.empresa.DadosListagemEmpresa;
-import br.com.devjoaopedro.expresscontabilidade.entities.empresa.Empresa;
-import br.com.devjoaopedro.expresscontabilidade.repositories.EmpresaRepository;
 import br.com.devjoaopedro.expresscontabilidade.service.EmpresaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -16,7 +16,7 @@ public record DadosDetalhamentoFuncionario(
         LocalDate dataSaida,
         Boolean situacao
 ) {
-    public DadosDetalhamentoFuncionario (Funcionario funcionario){
+    public DadosDetalhamentoFuncionario(Funcionario funcionario) {
         this(funcionario.getId(),
                 funcionario.getNome(),
                 funcionario.getCpf(),
