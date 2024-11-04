@@ -2,6 +2,7 @@ package br.com.devjoaopedro.expresscontabilidade.controllers;
 
 import br.com.devjoaopedro.expresscontabilidade.entities.cliente.*;
 import br.com.devjoaopedro.expresscontabilidade.repositories.ClienteRepository;
+import br.com.devjoaopedro.expresscontabilidade.service.ClienteService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,69 +18,47 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
+    @Autowired
+    private ClienteService clienteService;
 
     @PostMapping
     @Transactional
     public ResponseEntity<DadosDetalhamentoCliente> cadastrar(@RequestBody @Valid DadosCadastroCliente dados, UriComponentsBuilder uriBuilder) {
-        var cliente = new Cliente(dados);
-        clienteRepository.save(cliente);
-
+        var cliente = clienteService.cadastrar(dados);
         var uri = uriBuilder.path("/clientes/{id}")
-                .buildAndExpand(cliente.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new DadosDetalhamentoCliente(cliente));
+                .buildAndExpand(cliente.id()).toUri();
+        return ResponseEntity.created(uri).body(cliente);
 
     }
 
     @GetMapping
     public ResponseEntity<List<DadosListagemCliente>> listar() {
-        var listaClientes = clienteRepository.findAll()
-                .stream()
-                .map(DadosListagemCliente::new)
-                .toList();
-
-        return ResponseEntity.ok(listaClientes);
+        return ResponseEntity.ok(clienteService.listar());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DadosDetalhamentoCliente> buscarPorId(@PathVariable Long id) {
-        var cliente = clienteRepository.getReferenceById(id);
+        var cliente = clienteService.buscarPorId(id);
         return ResponseEntity.ok(new DadosDetalhamentoCliente(cliente));
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity<DadosDetalhamentoCliente> atualizar(@RequestBody @Valid DadosAtualizarCliente dados) {
-        var cliente = clienteRepository.getReferenceById(dados.id());
-        cliente.atualizarInformacoes(dados);
-        clienteRepository.save(cliente);
-
-        return ResponseEntity.ok(new DadosDetalhamentoCliente(cliente));
+        return ResponseEntity.ok(clienteService.atualizar(dados));
     }
 
     @PutMapping("/desativar/{id}")
     @Transactional
     public ResponseEntity<Void> desativar(@PathVariable Long id) {
-        var cliente = clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-        cliente.desativar();
-        clienteRepository.save(cliente);
+        clienteService.desativar(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/reativar/{id}")
     @Transactional
     public ResponseEntity<Void> reativarCliente(@PathVariable Long id) {
-        var clienteOptional = clienteRepository.findById(id);
-
-        if(clienteOptional.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        var cliente = clienteOptional.get();
-        cliente.reativar();
-        clienteRepository.save(cliente);
-
+        clienteService.reativar(id);
         return ResponseEntity.ok().build();
     }
 
