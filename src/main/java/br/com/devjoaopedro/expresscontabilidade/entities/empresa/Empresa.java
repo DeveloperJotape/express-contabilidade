@@ -39,10 +39,6 @@ public class Empresa {
     private LocalDate dataUltimaAtualizacao;
 
     @ManyToOne
-    @JoinColumn(name = "funcionario_responsavel_id")
-    private Funcionario funcionarioResponsavel;
-
-    @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     @JsonBackReference
     private Cliente cliente;

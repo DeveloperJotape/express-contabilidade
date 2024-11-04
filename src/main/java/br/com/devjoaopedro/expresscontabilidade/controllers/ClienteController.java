@@ -15,9 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
-
-    @Autowired
-    private ClienteRepository clienteRepository;
     @Autowired
     private ClienteService clienteService;
 
