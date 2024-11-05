@@ -2,6 +2,7 @@ package br.com.devjoaopedro.expresscontabilidade.service;
 
 import br.com.devjoaopedro.expresscontabilidade.entities.cliente.*;
 import br.com.devjoaopedro.expresscontabilidade.repositories.ClienteRepository;
+import br.com.devjoaopedro.expresscontabilidade.repositories.FuncionarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+    @Autowired
+    private FuncionarioRepository funcionarioRepository;
 
     @Transactional
     public DadosDetalhamentoCliente cadastrar(DadosCadastroCliente dados) {
-        var cliente = new Cliente(dados);
+        var cliente = new Cliente(dados, funcionarioRepository);
         clienteRepository.save(cliente);
         return new DadosDetalhamentoCliente(cliente);
     }

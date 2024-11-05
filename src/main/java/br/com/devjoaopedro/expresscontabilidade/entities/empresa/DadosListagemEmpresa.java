@@ -1,9 +1,7 @@
 package br.com.devjoaopedro.expresscontabilidade.entities.empresa;
 
-import br.com.devjoaopedro.expresscontabilidade.entities.cliente.Cliente;
 import br.com.devjoaopedro.expresscontabilidade.entities.cliente.DadosResumoCliente;
-import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.Funcionario;
-import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.enums.Cargo;
+import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.DadosResumoFuncionario;
 
 import java.time.LocalDate;
 
@@ -17,7 +15,8 @@ public record DadosListagemEmpresa(
         String email,
         Boolean status,
         LocalDate dataUltimaAtualizacao,
-        DadosResumoCliente responsavel
+        DadosResumoCliente cliente,
+        DadosResumoFuncionario funcionarioResponsavel
 ) {
     public DadosListagemEmpresa(Empresa empresa) {
         this(empresa.getId(),
@@ -29,6 +28,7 @@ public record DadosListagemEmpresa(
                 empresa.getEmail(),
                 empresa.getStatus(),
                 empresa.getDataUltimaAtualizacao(),
-                new DadosResumoCliente(empresa.getCliente()));
+                new DadosResumoCliente(empresa.getCliente()),
+                new DadosResumoFuncionario(empresa.getFuncionarioResponsavel()));
     }
 }

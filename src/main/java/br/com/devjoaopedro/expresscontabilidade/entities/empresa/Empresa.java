@@ -43,7 +43,11 @@ public class Empresa {
     @JsonBackReference
     private Cliente cliente;
 
-    public Empresa(DadosCadastroEmpresa dados, Cliente cliente) {
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionarioResponsavel;
+
+    public Empresa(DadosCadastroEmpresa dados, Cliente cliente, Funcionario funcionario) {
         this.nome = dados.nome();
         this.cnpj = dados.cnpj();
         this.uf = dados.uf();
@@ -55,6 +59,7 @@ public class Empresa {
         this.status = dados.status();
         this.dataUltimaAtualizacao = LocalDate.now();
         this.cliente = cliente;
+        this.funcionarioResponsavel = funcionario;
     }
 
     @PreUpdate

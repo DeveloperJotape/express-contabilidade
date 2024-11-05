@@ -24,6 +24,7 @@ public record DadosCadastroEmpresa(
         @NotNull
         Boolean status,
         @NotNull
-        LocalDate dataUltimaAtualizacao
+        LocalDate dataUltimaAtualizacao,
+        Long funcionarioId
 ) {
 }

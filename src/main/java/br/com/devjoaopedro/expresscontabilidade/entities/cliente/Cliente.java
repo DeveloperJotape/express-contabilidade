@@ -1,6 +1,8 @@
 package br.com.devjoaopedro.expresscontabilidade.entities.cliente;
 
 import br.com.devjoaopedro.expresscontabilidade.entities.empresa.Empresa;
+import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.Funcionario;
+import br.com.devjoaopedro.expresscontabilidade.repositories.FuncionarioRepository;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,14 +36,18 @@ public class Cliente {
     @JsonManagedReference
     private List<Empresa> empresas = new ArrayList<>();
 
-    public Cliente(DadosCadastroCliente dados) {
+    public Cliente(DadosCadastroCliente dados, FuncionarioRepository funcionarioRepository) {
         this.nome = dados.nome();
         this.cpf = dados.cpf();
         this.dataNascimento = dados.dataNascimento();
         this.email = dados.email();
         this.telefone = dados.telefone();
         if (dados.empresas() != null) {
-            dados.empresas().forEach(dto -> this.empresas.add(new Empresa(dto, this)));
+            dados.empresas().forEach(dto -> {
+                Funcionario funcionario = funcionarioRepository.findById(dto.funcionarioId())
+                        .orElseThrow(() -> new IllegalArgumentException("Funcionário não encontrado"));
+                this.empresas.add(new Empresa(dto, this, funcionario));
+            });
         }
     }
 
