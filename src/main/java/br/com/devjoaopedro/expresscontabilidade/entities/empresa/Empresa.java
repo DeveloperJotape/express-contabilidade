@@ -45,6 +45,7 @@ public class Empresa {
 
     @ManyToOne
     @JoinColumn(name = "funcionario_id")
+    @JsonBackReference
     private Funcionario funcionarioResponsavel;
 
     public Empresa(DadosCadastroEmpresa dados, Cliente cliente, Funcionario funcionario) {
