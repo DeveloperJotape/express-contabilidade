@@ -1,10 +1,13 @@
 package br.com.devjoaopedro.expresscontabilidade.entities.funcionario;
 
+import br.com.devjoaopedro.expresscontabilidade.entities.empresa.Empresa;
 import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.enums.Cargo;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "funcionarios")
 @Table(name = "Funcionario")
@@ -32,6 +35,9 @@ public class Funcionario {
     private LocalDate dataSaida;
 
     private Boolean situacao;
+
+    @OneToMany(mappedBy = "funcionarioResponsavel")
+    private List<Empresa> empresas = new ArrayList<>();
 
     public Funcionario(DadosCadastroFuncionario dados) {
         this.nome = dados.nome();

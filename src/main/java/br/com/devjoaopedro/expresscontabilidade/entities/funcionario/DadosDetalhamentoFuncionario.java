@@ -1,8 +1,11 @@
 package br.com.devjoaopedro.expresscontabilidade.entities.funcionario;
 
+import br.com.devjoaopedro.expresscontabilidade.entities.empresa.DadosResumoEmpresa;
 import br.com.devjoaopedro.expresscontabilidade.entities.funcionario.enums.Cargo;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public record DadosDetalhamentoFuncionario(
         Long id,
@@ -14,7 +17,8 @@ public record DadosDetalhamentoFuncionario(
         Cargo cargo,
         LocalDate dataEntrada,
         LocalDate dataSaida,
-        Boolean situacao
+        Boolean situacao,
+        List<DadosResumoEmpresa> empresas
 ) {
     public DadosDetalhamentoFuncionario(Funcionario funcionario) {
         this(funcionario.getId(),
@@ -26,6 +30,8 @@ public record DadosDetalhamentoFuncionario(
                 funcionario.getCargo(),
                 funcionario.getDataEntrada(),
                 funcionario.getDataSaida(),
-                funcionario.getSituacao());
+                funcionario.getSituacao(),
+                funcionario.getEmpresas().stream().map(DadosResumoEmpresa::new).collect(Collectors.toList())
+        );
     }
 }
