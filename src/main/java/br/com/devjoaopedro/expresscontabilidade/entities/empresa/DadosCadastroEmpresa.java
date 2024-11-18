@@ -21,9 +21,7 @@ public record DadosCadastroEmpresa(
         String telefone,
         @Email @NotBlank
         String email,
-        @NotNull
         Boolean status,
-        @NotNull
         LocalDate dataUltimaAtualizacao,
         Long funcionarioId
 ) {

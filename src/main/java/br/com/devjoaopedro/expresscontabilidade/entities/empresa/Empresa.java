@@ -63,6 +63,36 @@ public class Empresa {
         this.funcionarioResponsavel = funcionario;
     }
 
+    /*public void atualizarInformacoes(DadosAtualizarEmpresa dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if (dados.cnpj() != null) {
+            this.cnpj = dados.cnpj();
+        }
+        if (dados.uf() != null) {
+            this.uf = dados.uf();
+        }
+        if (dados.regTributacao() != null) {
+            this.regTributacao = dados.regTributacao();
+        }
+        if (dados.qualificacao() != null) {
+            this.qualificacao = dados.qualificacao();
+        }
+        if (dados.inscricaoEstadual() != null) {
+            this.inscricaoEstadual = dados.inscricaoEstadual();
+        }
+        if (dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+        if (dados.email() != null) {
+            this.email = dados.email();
+        }
+        if (dados.funcionarioResponsavel() != null) {
+            this.funcionarioResponsavel = dados.funcionarioResponsavel();
+        }
+    }*/
+
     @PreUpdate
     private void atualizarDataUltimaAtualizacao() {
         this.dataUltimaAtualizacao = LocalDate.now();
